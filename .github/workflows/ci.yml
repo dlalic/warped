@@ -1,0 +1,35 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build-ubuntu:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Configure
+        run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=release ..
+      - name: Build
+        run: cmake --build build
+      - name: Test
+        run: cd build && ctest
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          cd tests
+          pip install -r requirements.txt
+      - name: Integration test
+        run: |
+          cd tests
+          pytest test.py
