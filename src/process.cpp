@@ -46,25 +46,6 @@ static double sample_to_beat(std::vector<WarpMarker> &markers, double value, dou
     return second.beat_time + seconds * end_tempo;
 }
 
-/*static void insert_sorted(std::vector<WarpMarker> &markers, const WarpMarker &marker) {
-    auto it = upper_bound(markers.begin(), markers.end(), marker, [](auto &lhs, auto &rhs) {
-        return lhs.sample_time < rhs.sample_time;
-    });
-    markers.insert(it, marker);
-};
-
-static std::tuple<WarpMarker, WarpMarker> closest(std::vector<WarpMarker> &markers, double value) {
-    auto const lower = std::lower_bound(markers.begin(), markers.end(), value,
-                                        [](WarpMarker lhs, WarpMarker rhs) -> bool {
-                                            return lhs.beat_time < rhs.beat_time;
-                                        });
-    auto const upper = std::upper_bound(markers.begin(), markers.end(), value,
-                                        [](WarpMarker lhs, WarpMarker rhs) -> bool {
-                                            return lhs.beat_time < rhs.beat_time;
-                                        });
-    return std::make_tuple(*lower, *upper);
-}*/
-
 std::optional<double> process_line(const std::string &line, std::vector<WarpMarker> &markers, double end_tempo) {
     std::unordered_map<std::string, int> input_map = {
             {"marker",    Input::marker},
